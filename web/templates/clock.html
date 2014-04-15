@@ -11,8 +11,8 @@
         .content
         {
             position: relative;
-            width: 1080px;
-            height: 780px;
+            width:  910px;
+            height: 910px;
             background: url({{ url_for('static', filename='unlit.jpg') }}) no-repeat 0 0;
             overflow: hidden;
         }
@@ -22,8 +22,6 @@
             position: absolute;
             background-image: url({{ url_for('static', filename='lit.jpg')}});
             background-repeat: no-repeat;
-            width: 108px;
-            height: 80px;
         }
     </style>
 
@@ -49,7 +47,7 @@
 <body>
     <div class="content">
         {% for c in cells %}
-            <div id="{{c.id}}" title="{{c.title}}" class="lit" style="left: {{c.left}}px; top: {{c.top}}px; background-position: -{{c.left}}px -{{c.top}}px"></div>
+            <div id="{{c.id}}" title="{{c.title}}" class="lit" style="left: {{c.left}}px; top: {{c.top}}px; background-position: -{{c.left}}px -{{c.top}}px; height:{{c.height}}px; width:{{c.width}}px"></div>
         {% endfor %}
     </div>
 
