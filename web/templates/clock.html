@@ -1,11 +1,7 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Image Demo</title>
+﻿{% extends "base.html" %}
 
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
-    <script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
+{% block head %}
+    {{ super() }}
 
     <style type='text/css'>
         .content
@@ -39,19 +35,13 @@
                 }, 1000);
             });
         });//]]>  
+    </script>
 
-</script>
+{% endblock %}
 
-</head>
-
-<body>
-    <div class="content">
+{% block content %}
         {% for c in cells %}
             <div id="{{c.id}}" title="{{c.title}}" class="lit" style="left: {{c.left}}px; top: {{c.top}}px; background-position: -{{c.left}}px -{{c.top}}px; height:{{c.height}}px; width:{{c.width}}px"></div>
         {% endfor %}
-    </div>
-
-</body>
-
-</html>
+{% endblock %}
 
