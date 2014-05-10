@@ -260,13 +260,13 @@ def build_cells(fontpath,fontsize,style,case):
 
 if __name__ == '__main__':
 
-    build_cells(fontpath=r".\JosefinSans-Regular.ttf",
+    build_cells(fontpath=r"./fonts/JosefinSans-Regular.ttf",
                 fontsize=35,
                 style=english_v4,
                 case=lower)
 
 
-    img = drawclock(fontpath=r".\JosefinSans-Regular.ttf",
+    img = drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
                     fontsize=35,
                     fgcolor=PALEYELLOW,
                     bgcolor=BLACK,
@@ -275,7 +275,7 @@ if __name__ == '__main__':
                     drawLEDs=False)
     img.save('./static/lit.jpg')
 
-    img = drawclock(fontpath=r".\JosefinSans-Regular.ttf",
+    img = drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
                     fontsize=35,
                     fgcolor=GRAY,
                     bgcolor=BLACK,

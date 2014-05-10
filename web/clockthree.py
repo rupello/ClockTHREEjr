@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/index')
 def index():
     return render_template('clock.html',
-                           cells=build_cells(fontpath=r".\JosefinSans-Regular.ttf",
+                           cells=build_cells(fontpath=r"./fonts/JosefinSans-Regular.ttf",
                                                           fontsize=35,
                                                           style=english_v4,
                                                           case=lower))
