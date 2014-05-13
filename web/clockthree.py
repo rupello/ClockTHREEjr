@@ -19,10 +19,9 @@ def index():
                                                           style=data['letters'],
                                                           case=lower))
 
-#var mapdata=null;
-#$.getJSON('map',function(data) {mapdata=data;});
-#$('.lit').hide()
-#$(mapdata.words['it']).show()
+# TODO add dynamic clock face generation
+# TODO add lang selection eg /clockthreejr/English_v3/
+
 
 @app.route('/map')
 def map():
