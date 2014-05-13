@@ -262,7 +262,7 @@ if __name__ == '__main__':
 
     build_cells(fontpath=r"./fonts/JosefinSans-Regular.ttf",
                 fontsize=35,
-                style=english_v4,
+                style=english_v3,
                 case=lower)
 
 
@@ -270,7 +270,7 @@ if __name__ == '__main__':
                     fontsize=35,
                     fgcolor=PALEYELLOW,
                     bgcolor=BLACK,
-                    style=english_v4,
+                    style=english_v3,
                     case=lower,
                     drawLEDs=False)
     img.save('./static/lit.jpg')
@@ -279,7 +279,7 @@ if __name__ == '__main__':
                     fontsize=35,
                     fgcolor=GRAY,
                     bgcolor=BLACK,
-                    style=english_v4,
+                    style=english_v3,
                     case=lower,
                     drawLEDs=False)
     img.save('./static/unlit.jpg')
