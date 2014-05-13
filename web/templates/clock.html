@@ -21,18 +21,39 @@
         }
     </style>
 
-    <script type='text/javascript'>//<![CDATA[ 
+    <script type='text/javascript'>//<![CDATA[
+        // Global variables
+        var time5 = 0 ;
+        var mapdata = null ;
+
+
+        function lightsentence(i) {
+            $('.lit').hide();
+            sentence = mapdata.sentences[i];
+            for (var i = 0; i < sentence.length;i++) {
+                $(mapdata.words[sentence[i]]).show();
+                }
+            }
+
         $(window).load(function () {
-            // Global variables
-
             $(document).ready(function () {
-                // switch off every other element
-                //$(".lit").filter(":even").toggle();
+                $.getJSON('map',function(data) {
+                                    mapdata=data;
+                                    lightsentence(time5);
+                                });
 
-                //// toggle elements every interval
-                //setInterval(function () {
-                //    $(".lit").toggle();
-                //}, 1000);
+            $(document).keydown(function(e){
+                if (e.keyCode == 37) {
+                    time5 = (time5+287) % 288
+                    lightsentence(time5);
+                    return false;
+                    }
+                if (e.keyCode == 39) {
+                    time5 = (time5+1) % 288
+                    lightsentence(time5);
+                    return false;
+                    }
+                });
             });
         });//]]>  
     </script>

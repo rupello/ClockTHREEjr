@@ -10,6 +10,7 @@ from string import lower,upper
 import codecs
 from numpy import array,arange
 
+import Simulate
 
 # In[26]:
 
@@ -260,9 +261,10 @@ def build_cells(fontpath,fontsize,style,case):
 
 if __name__ == '__main__':
 
+    data = Simulate.readwtf('langs/English_v3.wtf')
     build_cells(fontpath=r"./fonts/JosefinSans-Regular.ttf",
                 fontsize=35,
-                style=english_v3,
+                style=data['letters'],
                 case=lower)
 
 
@@ -270,7 +272,7 @@ if __name__ == '__main__':
                     fontsize=35,
                     fgcolor=PALEYELLOW,
                     bgcolor=BLACK,
-                    style=english_v3,
+                    style=data['letters'],
                     case=lower,
                     drawLEDs=False)
     img.save('./static/lit.jpg')
@@ -279,7 +281,7 @@ if __name__ == '__main__':
                     fontsize=35,
                     fgcolor=GRAY,
                     bgcolor=BLACK,
-                    style=english_v3,
+                    style=data['letters'],
                     case=lower,
                     drawLEDs=False)
     img.save('./static/unlit.jpg')

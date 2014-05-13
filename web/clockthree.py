@@ -12,10 +12,11 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
+    data = Simulate.readwtf('langs/English_v3.wtf')
     return render_template('clock.html',
                            cells=build_cells(fontpath=r"./fonts/JosefinSans-Regular.ttf",
                                                           fontsize=35,
-                                                          style=english_v3,
+                                                          style=data['letters'],
                                                           case=lower))
 
 #var mapdata=null;
@@ -25,7 +26,7 @@ def index():
 
 @app.route('/map')
 def map():
-    data = Simulate.readwtf('langs/English_v2.wtf')
+    data = Simulate.readwtf('langs/English_v3.wtf')
     return clockwords.data2json(data)
 
 
