@@ -9,14 +9,14 @@
             position: relative;
             width:  910px;
             height: 910px;
-            background: url({{ url_for('static', filename='unlit.jpg') }}) no-repeat 0 0;
+            background: url('./clockface') no-repeat 0 0;
             overflow: hidden;
         }
 
         .lit
         {
             position: absolute;
-            background-image: url({{ url_for('static', filename='lit.jpg')}});
+            background-image: url('./clockface?fg=%23FFFBD9');
             background-repeat: no-repeat;
         }
     </style>

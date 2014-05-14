@@ -1,34 +1,52 @@
 import os
-from flask import Flask, render_template, abort
+from string import lower,upper
+import StringIO
+
+import flask
+from flask import Flask, render_template, abort, Response, request
+
 import Simulate
 import clockwords
-from clockface import build_cells
-from string import lower,upper
+import clockface
 
 
 app = Flask(__name__)
 
 
-@app.route('/')
-@app.route('/index')
-def index():
-    data = Simulate.readwtf('langs/English_v3.wtf')
-    return render_template('clock.html',
-                           cells=build_cells(fontpath=r"./fonts/JosefinSans-Regular.ttf",
-                                                          fontsize=35,
-                                                          style=data['letters'],
-                                                          case=lower))
-
-# TODO add dynamic clock face generation
-# TODO add lang selection eg /clockthreejr/English_v3/
-
 def findwtf(style):
+    "find the path to the .wrf file"
     for dirpath,dirnames,fnames in os.walk('./langs'):
         for f in fnames:
             name,ext = os.path.splitext(f)
             if ext.lower()=='.wtf':
                 if style.lower()==name.lower():
                     return os.path.join(dirpath,f)
+
+
+@app.route('/')
+@app.route('/index')
+def index():
+    return flask.redirect("/clock3jr/english_v3", code=302)
+
+
+@app.route('/clock3jr/<style>/clockface')
+def clockfaceimg(style):
+    wtfpath = findwtf(style)
+    if wtfpath is not None:
+        data = Simulate.readwtf(wtfpath)
+        fgcolor = request.args.get('fg', '#303030')
+        img = clockface.drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
+                                    fontsize=35,
+                                    fgcolor=fgcolor,
+                                    bgcolor=clockface.BLACK,
+                                    style=data['letters'],
+                                    case=lower,
+                                    drawLEDs=False)
+        io = StringIO.StringIO()
+        img.save(io, format='JPEG')
+        return Response(io.getvalue(), mimetype='image/jpeg')
+    else:
+        abort(404)
 
 
 @app.route('/clock3jr/<style>/map')
@@ -47,12 +65,13 @@ def clock3jr(style):
     if wtfpath is not None:
         data = Simulate.readwtf(wtfpath)
         return render_template('clock.html',
-                               cells=build_cells(fontpath=r"./fonts/JosefinSans-Regular.ttf",
+                               cells=clockface.build_cells(fontpath=r"./fonts/JosefinSans-Regular.ttf",
                                                  fontsize=35,
                                                  style=data['letters'],
                                                  case=lower))
     else:
         abort(404)
+
 
 #!flask/bin/python
 if __name__ == '__main__':
