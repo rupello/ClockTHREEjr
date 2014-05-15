@@ -42,6 +42,7 @@
                                     lightsentence(time5);
                                 });
 
+            // left and right arrow keys move time back/fwd
             $(document).keydown(function(e){
                 if (e.keyCode == 37) {
                     time5 = (time5+287) % 288
@@ -54,6 +55,12 @@
                     return false;
                     }
                 });
+
+                // advance time on mouse-click
+                $( "div" ).click(function() {
+                    time5 = (time5+1) % 288
+                    lightsentence(time5);
+}               );
             });
         });//]]>  
     </script>
