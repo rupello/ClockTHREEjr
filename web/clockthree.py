@@ -35,7 +35,8 @@ def clockfaceimg(style):
     if wtfpath is not None:
         data = Simulate.readwtf(wtfpath)
         fgcolor = request.args.get('fg', '#303030')
-        img = clockface.drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
+        #img = clockface.drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
+        img = clockface.drawclock(fontpath=r"./fonts/SILEOT.ttf",
                                     fontsize=35,
                                     fgcolor=fgcolor,
                                     bgcolor=clockface.BLACK,

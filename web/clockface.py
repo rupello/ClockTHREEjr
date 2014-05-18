@@ -53,10 +53,10 @@ def drawhole(draw,h,outline):
 
 # In[32]:
 
-def drawletter(draw,pos,font,letter,fill):
-    x,y = (pt2pxx(pos[0]),pt2pxy(pos[1]))    
-    text_width,text_height = font.getsize(letter)
-    text_off_x, text_off_y = font.getoffset(letter)   
+def drawletter(draw,pos,font,uletter,fill):
+    x,y = (pt2pxx(pos[0]),pt2pxy(pos[1]))
+    text_width,text_height = font.getsize(uletter)
+    text_off_x, text_off_y = font.getoffset(uletter)
     # center letter in the grid
     asc,desc = font.getmetrics()
     
@@ -64,7 +64,7 @@ def drawletter(draw,pos,font,letter,fill):
     x = x - (text_width/2 + text_off_x)
     y = y - (asc+desc)/2
         
-    draw.text((x, y),letter , fill=fill,font=font)
+    draw.text((x, y),uletter, fill=fill,font=font)
 
 
 # In[33]:
@@ -85,7 +85,7 @@ def drawletters(draw,lines,font,case,led_xs,led_ys,fill):
 
 # In[35]:
 
-def encodeLetters(style,case,encName='utf-8'):
+def decodeLetters(style,case,decName='utf-8'):
     
     if type(style) == type(''):
         lines = style.strip().splitlines()
@@ -100,11 +100,11 @@ def encodeLetters(style,case,encName='utf-8'):
         else:
             return case(decoder(txt, errors='replace')[0])
     
-    def decodeFunc(txt):
-        if txt is None:
-            return ' '
-        else:
-            return txt
+    #def decodeFunc(txt):
+    #    if txt is None:
+    #        return ' '
+    #    else:
+    #        return txt
     
     return [[decodeFunc(case(char)) for char in line] for line in lines]
 
@@ -115,7 +115,7 @@ def drawclock(fontpath,fontsize,fgcolor,bgcolor,style,case,drawLEDs=False):
     # init font
     scaledfontsize = pt2pxy(fontsize)
     font = ImageFont.truetype(size=scaledfontsize,filename=fontpath)
-    lines = encodeLetters(style,case)
+    lines = decodeLetters(style,case)
 
     img = Image.new("RGBA", (pt2pxx(WIDTH), pt2pxy(HEIGHT)))
     draw = Draw(img)
@@ -229,7 +229,7 @@ def build_cells(fontpath,fontsize,style,case):
     cells = []
     scaledfontsize = pt2pxy(fontsize)
     font = ImageFont.truetype(size=scaledfontsize,filename=fontpath)
-    lines = encodeLetters(style,case)
+    lines = decodeLetters(style,case)
 
     img = Image.new("RGBA", (pt2pxx(WIDTH), pt2pxy(HEIGHT)))
     draw = Draw(img)
@@ -261,30 +261,35 @@ def build_cells(fontpath,fontsize,style,case):
 
 if __name__ == '__main__':
 
-    data = Simulate.readwtf('langs/English_v3.wtf')
-    build_cells(fontpath=r"./fonts/JosefinSans-Regular.ttf",
-                fontsize=35,
+    data = Simulate.readwtf('langs/Hebrew_v1.wtf')
+    #data = Simulate.readwtf('langs/English_v3.wtf')
+    fontpath = r"./fonts/SILEOT.ttf"
+    #fontpath = r'c:\windows\fonts\tahoma.ttf'
+    #fontpath = r'c:\windows\fonts\mriamc.ttf'
+    fontsize = 35
+    build_cells(fontpath=fontpath,
+                fontsize=fontsize,
                 style=data['letters'],
                 case=lower)
 
 
-    img = drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
-                    fontsize=35,
+    img = drawclock(fontpath=fontpath,
+                    fontsize=fontsize,
                     fgcolor=PALEYELLOW,
                     bgcolor=BLACK,
                     style=data['letters'],
                     case=lower,
                     drawLEDs=False)
-    img.save('./static/lit.jpg')
+    img.save('./temp/lit.jpg')
 
-    img = drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
-                    fontsize=35,
+    img = drawclock(fontpath=fontpath,
+                    fontsize=fontsize,
                     fgcolor=GRAY,
                     bgcolor=BLACK,
                     style=data['letters'],
                     case=lower,
                     drawLEDs=False)
-    img.save('./static/unlit.jpg')
+    img.save('./temp/unlit.jpg')
 
 
 
