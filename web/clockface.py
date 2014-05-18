@@ -85,7 +85,7 @@ def drawletters(draw,lines,font,case,led_xs,led_ys,fill):
 
 # In[35]:
 
-def decodeLetters(style,case,decName='utf-8'):
+def decodeLetters(style,case,encName='utf-8'):
     
     if type(style) == type(''):
         lines = style.strip().splitlines()
