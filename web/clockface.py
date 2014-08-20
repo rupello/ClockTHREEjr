@@ -263,7 +263,7 @@ if __name__ == '__main__':
 
     data = Simulate.readwtf('langs/Hebrew_v1.wtf')
     #data = Simulate.readwtf('langs/English_v3.wtf')
-    fontpath = r"./fonts/SILEOT.ttf"
+    fontpath = r"./fonts/FreeSans.ttf"
     #fontpath = r'c:\windows\fonts\tahoma.ttf'
     #fontpath = r'c:\windows\fonts\mriamc.ttf'
     fontsize = 35
