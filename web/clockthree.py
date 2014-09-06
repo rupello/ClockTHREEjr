@@ -3,15 +3,26 @@ from string import lower,upper
 import StringIO
 
 import flask
-from flask import Flask, render_template, abort, Response, request
+from flask import Flask, render_template, abort, Response, request, current_app
+import ttfquery
 
 import Simulate
 import clockwords
 import clockface
+import wtfhelpers
 
+def create_app():
+    "create a configures app instance"
+    app = Flask(__name__)
 
-app = Flask(__name__)
+    fontreg = ttfquery.ttffiles.Registry()
+    fontreg.scan(os.path.expanduser('./fonts/'))
+    app.config['wtfs'] = wtfhelpers.loadwtfsandfonts('./langs/',fontreg)
+    app.config['fontregistry'] = fontreg
+    return app
 
+# the app
+app = create_app()
 
 def findwtf(style):
     "find the path to the .wrf file"
@@ -36,7 +47,7 @@ def clockfaceimg(style):
         data = Simulate.readwtf(wtfpath)
         fgcolor = request.args.get('fg', '#303030')
         #img = clockface.drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
-        img = clockface.drawclock(fontpath=r"./fonts/Kranky.ttf",
+        img = clockface.drawclock(fontpath=r"./fonts/FreeMono.ttf",
                                     fontsize=40,
                                     fgcolor=fgcolor,
                                     bgcolor=clockface.BLACK,
@@ -72,6 +83,11 @@ def clock3jr(style):
                                                  case=lower))
     else:
         abort(404)
+
+@app.route('/clock3jr/styles/')
+def styles():
+    wtfs = current_app.config['wtfs']
+    return render_template('styles.html',styles=['foo','bar'],wtfs=wtfs)
 
 
 #!flask/bin/python

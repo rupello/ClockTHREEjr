@@ -262,6 +262,7 @@ def build_cells(fontpath,fontsize,style,case):
 if __name__ == '__main__':
 
     data = Simulate.readwtf('langs/Hebrew_v1.wtf')
+    data = Simulate.readwtf('langs/German_v1.wtf')
     #data = Simulate.readwtf('langs/English_v3.wtf')
     fontpath = r"./fonts/FreeSans.ttf"
     #fontpath = r'c:\windows\fonts\tahoma.ttf'
