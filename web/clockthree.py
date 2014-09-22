@@ -16,7 +16,7 @@ def create_app():
     app = Flask(__name__)
 
     fontreg = ttfquery.ttffiles.Registry()
-    fontreg.scan(os.path.expanduser('./fonts/'))
+    fontreg.scan('./fonts/')
     app.config['wtfs'] = wtfhelpers.loadwtfsandfonts('./langs/',fontreg)
     app.config['fontregistry'] = fontreg
     return app
@@ -34,6 +34,10 @@ def findwtf(style):
                     return os.path.join(dirpath,f)
 
 
+def default_font(style):
+    return current_app.config['wtfs'][style.lower()]['fonts'][0]
+
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -47,8 +51,8 @@ def clockfaceimg(style):
         data = Simulate.readwtf(wtfpath)
         fgcolor = request.args.get('fg', '#303030')
         #img = clockface.drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
-        img = clockface.drawclock(fontpath=r"./fonts/FreeMono.ttf",
-                                    fontsize=40,
+        img = clockface.drawclock(fontpath=default_font(style),
+                                    fontsize=30,
                                     fgcolor=fgcolor,
                                     bgcolor=clockface.BLACK,
                                     style=data['letters'],
@@ -77,10 +81,10 @@ def clock3jr(style):
     if wtfpath is not None:
         data = Simulate.readwtf(wtfpath)
         return render_template('clock.html',
-                               cells=clockface.build_cells(fontpath=r"./fonts/Kranky.ttf",
-                                                 fontsize=40,
-                                                 style=data['letters'],
-                                                 case=lower))
+                               cells=clockface.build_cells(fontpath=default_font(style),
+                                                            fontsize=40,
+                                                            style=data['letters'],
+                                                            case=lower))
     else:
         abort(404)
 

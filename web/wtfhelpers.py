@@ -23,7 +23,7 @@ def wtffiles(wtfdir):
     return wtffiles
 
 def wtfname(wtfpath):
-    return os.path.splitext(os.path.basename(wtfpath))[0]
+    return os.path.splitext(os.path.basename(wtfpath))[0].lower()
 
 
 def loadwtfs(folder):
@@ -61,26 +61,40 @@ def fontsforwtf(wtfdata,fontreg):
     return findvalidfonts(fontreg.files,first_line_chars)
 
 
-def loadwtfsandfonts(stylesfolder,fontregistry):
+def loadwtfsandfonts(stylesfolder, fontregistry):
     # scan wtfs and find valid fonts
     wtfsbyname = loadwtfs(stylesfolder)
     for name,values in wtfsbyname.items():
-        values['fonts'] = fontsforwtf(values['wtfdata'],fontregistry)
+        values['fonts'] = list(fontsforwtf(values['wtfdata'], fontregistry))
 
     return wtfsbyname
+
+def typefaces(wtf):
+    typefaces = {}
+    for font_path in wtf['fonts']:
+        f = ttfquery.describe.openFont(font_path)
+        font,typeface = ttfquery.describe.shortName(f)
+        if typeface not in typefaces:
+            typefaces[typeface] = {}
+        typefaces[typeface][font] = os.path.basename(font_path)
+    return typefaces
+
+
+def typefacesbywtf(wtfsbyname):
+    typefaces_by_wtf =  {}
+    for name,wtf in wtfsbyname.items():
+        typefaces_by_wtf[name] = typefaces(wtf)
+    print typefaces_by_wtf
 
 
 if __name__ == '__main__':
     # scan fonts
     fontreg = ttfquery.ttffiles.Registry()
-    fontreg.scan(os.path.expanduser('./fonts/'))
-
+    fontreg.scan('./fonts/')
     wtfsbyname = loadwtfsandfonts('./langs/',fontreg)
-    for name,values in wtfsbyname.items():
-        print name
-        print values['wtfpath']
-        print values['fonts']
 
+    #print typefacesbywtf(wtfsbyname)
+    print wtfsbyname
 
 
 

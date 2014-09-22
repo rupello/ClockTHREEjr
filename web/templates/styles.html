@@ -9,6 +9,11 @@
        <ul>
         {% for wtf in wtfs %}
            <li><a href="../{{wtf}}">{{wtf}}</a></li>
+           {% for f in wtfs[wtf]['fonts'] %}
+           <ul>
+               {{f}}
+           </ul>
+           {% endfor %}
         {% endfor %}
         </ul>
 {% endblock %}

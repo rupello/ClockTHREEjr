@@ -77,7 +77,7 @@ class Spreadsheet:
         return out
         
     
-def readwtf(csvfile, n_row=8, n_col=16):
+def readwtf(csvfile, n_row=8, n_col=16,printchars=False):
     f = csv.reader(open(csvfile))
     lines = list(f)
     ss = Spreadsheet(lines)
@@ -108,14 +108,15 @@ def readwtf(csvfile, n_row=8, n_col=16):
     bitmap = zeros((288, n_word), int)
     dat = ss.getRegion('V6:*294')
     for i in range(288):
-        print '%02d:%02d' % (i / 12, (5 * i) % 60),
+        if printchars:
+            print '%02d:%02d' % (i / 12, (5 * i) % 60),
         for j in range(n_word):
             if (j < len(dat[i]) and
                 dat[i][j] is not None and 
                 dat[i][j].strip() != ''):
-                print words[j],
+                if printchars: print words[j],
                 bitmap[i, j] = 1
-        print
+        if printchars: print
     n_min_led = int(ss.getCell('V294'))
     n_min_state = int(ss.getCell('X294'))
     if n_min_led > 0:
