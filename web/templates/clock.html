@@ -3,20 +3,23 @@
 {% block head %}
     {{ super() }}
 
+    <a href="{{url_for('clockfaceimg',style=style,fg='#FFFBD9',font=fontname)}}"></a>
     <style type='text/css'>
         .content
         {
             position: relative;
             width:  910px;
             height: 910px;
-            background: url('{{url_for('clockfaceimg',style=style,font=fontname)}}') no-repeat 0 0;
+            {# note the use of the |safe filter to disable autoescaping within the script block #}
+            background: url('{{url_for('clockfaceimg',style=style,font=fontname)|safe}}') no-repeat 0 0;
             overflow: hidden;
         }
 
         .lit
         {
             position: absolute;
-            background-image: url('{{url_for('clockfaceimg',style=style,fg='#FFFBD9',font=fontname)}}');
+            {# note the use of the |safe filter to disable autoescaping within the script block #}
+            background-image: url("{{url_for('clockfaceimg',style=style,fg='#FFFBD9',font=fontname)|safe}}");
             background-repeat: no-repeat;
         }
     </style>
@@ -38,8 +41,8 @@
         $(window).load(function () {
             $(document).ready(function () {
                 $.getJSON('map',function(data) {
-                                    mapdata=data;
-                                    lightsentence(time5);
+                                    mapdata=data;;
+                                    lightsentence(time5)
                                 });
 
             // left and right arrow keys move time back/fwd
