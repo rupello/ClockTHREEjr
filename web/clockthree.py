@@ -38,10 +38,22 @@ def default_font(style):
     return current_app.config['wtfs'][style.lower()]['fonts'][0]
 
 
+def findfontpath(style,fontname):
+    for fontpath in current_app.config['wtfs'][style.lower()]['fonts']:
+        if font_name_from_path(fontpath)==fontname:
+            return fontpath
+    return default_font(style)
+
+
+@app.template_filter('fontname')
+def font_name_from_path(path):
+    return os.path.basename(path).lower()
+
+
 @app.route('/')
 @app.route('/index')
 def index():
-    return flask.redirect("/clock3jr/english_v3", code=302)
+    return flask.redirect("/clock3jr/styles/", code=302)
 
 
 @app.route('/clock3jr/<style>/clockface')
@@ -50,8 +62,9 @@ def clockfaceimg(style):
     if wtfpath is not None:
         data = Simulate.readwtf(wtfpath)
         fgcolor = request.args.get('fg', '#303030')
+        fontname = request.args.get('font')
         #img = clockface.drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
-        img = clockface.drawclock(fontpath=default_font(style),
+        img = clockface.drawclock(fontpath=findfontpath(style,fontname),
                                     fontsize=30,
                                     fgcolor=fgcolor,
                                     bgcolor=clockface.BLACK,
@@ -79,12 +92,15 @@ def map(style):
 def clock3jr(style):
     wtfpath = findwtf(style)
     if wtfpath is not None:
+        fontname = request.args.get('font')
         data = Simulate.readwtf(wtfpath)
         return render_template('clock.html',
-                               cells=clockface.build_cells(fontpath=default_font(style),
+                               cells=clockface.build_cells(fontpath=findfontpath(style,fontname),
                                                             fontsize=40,
                                                             style=data['letters'],
-                                                            case=lower))
+                                                            case=lower),
+                               style=style,
+                               fontname=fontname)
     else:
         abort(404)
 

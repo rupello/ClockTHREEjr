@@ -11,7 +11,7 @@
            <li><a href="../{{wtf}}">{{wtf}}</a></li>
            {% for f in wtfs[wtf]['fonts'] %}
            <ul>
-               {{f}}
+               <a href="{{url_for('clock3jr',style=wtf,font=f|fontname)}}">{{f|fontname}}</a>
            </ul>
            {% endfor %}
         {% endfor %}
