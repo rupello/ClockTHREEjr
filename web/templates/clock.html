@@ -1,6 +1,7 @@
-﻿{% extends "base.html" %}
+﻿{# {% extends "base.html" %} #}
+{% extends "bootstrap/base.html" %}
 
-{% block head %}
+{% block styles %}
     {{ super() }}
 
     <a href="{{url_for('clockfaceimg',style=style,fg='#FFFBD9',font=fontname)}}"></a>
@@ -23,7 +24,10 @@
             background-repeat: no-repeat;
         }
     </style>
+{% endblock %}
 
+{% block scripts %}
+    {{ super() }}
     <script type='text/javascript'>//<![CDATA[
         // Global variables
         var time5 = 0 ;
@@ -60,7 +64,7 @@
                 });
 
                 // advance time on mouse-click
-                $( "div" ).click(function() {
+                $( ".content" ).click(function() {
                     time5 = (time5+1) % 288
                     lightsentence(time5);
 }               );
@@ -71,8 +75,39 @@
 {% endblock %}
 
 {% block content %}
-        {% for c in cells %}
-            <div id="{{c.id}}" title="{{c.title}}" class="lit" style="left: {{c.left}}px; top: {{c.top}}px; background-position: -{{c.left}}px -{{c.top}}px; height:{{c.height}}px; width:{{c.width}}px"></div>
-        {% endfor %}
+<div class="jumbotron">
+    <div class="container">
+        <div class="content">
+            {% for c in cells %}
+                <div id="{{c.id}}" title="{{c.title}}" class="lit" style="left: {{c.left}}px; top: {{c.top}}px; background-position: -{{c.left}}px -{{c.top}}px; height:{{c.height}}px; width:{{c.width}}px"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Launch demo modal
+    </button>
+
+   <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
 {% endblock %}
 

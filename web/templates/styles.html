@@ -1,10 +1,13 @@
-﻿{% extends "base.html" %}
+﻿{% extends "bootstrap/base.html" %}
 
 {% block head %}
     {{ super() }}
 {% endblock %}
 
+{% block title %}This is an example page{% endblock %}
+
 {% block content %}
+    <div class="container">
         <h2>Clock Styles</h2>
        <ul>
         {% for wtf in wtfs %}
@@ -16,5 +19,6 @@
            {% endfor %}
         {% endfor %}
         </ul>
+    </div>
 {% endblock %}
 

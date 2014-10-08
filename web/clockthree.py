@@ -5,6 +5,7 @@ import StringIO
 import flask
 from flask import Flask, render_template, abort, Response, request, current_app
 import ttfquery
+from flask_bootstrap import Bootstrap
 
 import Simulate
 import clockwords
@@ -14,6 +15,7 @@ import wtfhelpers
 def create_app():
     "create a configures app instance"
     app = Flask(__name__)
+    Bootstrap(app)
 
     fontreg = ttfquery.ttffiles.Registry()
     fontreg.scan('./fonts/')
