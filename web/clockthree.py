@@ -65,9 +65,13 @@ def clockfaceimg(style):
         data = Simulate.readwtf(wtfpath)
         fgcolor = request.args.get('fg', '#303030')
         fontname = request.args.get('font')
+        try:
+            fontsize = int(request.args.get('fontsize','30'))
+        except ValueError:
+            fontsize = 30
         #img = clockface.drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
         img = clockface.drawclock(fontpath=findfontpath(style,fontname),
-                                    fontsize=30,
+                                    fontsize=fontsize,
                                     fgcolor=fgcolor,
                                     bgcolor=clockface.BLACK,
                                     style=data['letters'],
@@ -95,14 +99,19 @@ def clock3jr(style):
     wtfpath = findwtf(style)
     if wtfpath is not None:
         fontname = request.args.get('font')
+        try:
+            fontsize = int(request.args.get('fontsize','30'))
+        except ValueError:
+            fontsize = 30
         data = Simulate.readwtf(wtfpath)
         return render_template('clock.html',
                                cells=clockface.build_cells(fontpath=findfontpath(style,fontname),
-                                                            fontsize=40,
+                                                            fontsize=fontsize,
                                                             style=data['letters'],
                                                             case=lower),
                                style=style,
-                               fontname=fontname)
+                               fontname=fontname,
+                               fontsize=fontsize)
     else:
         abort(404)
 

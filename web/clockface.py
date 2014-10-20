@@ -267,7 +267,7 @@ if __name__ == '__main__':
     fontpath = r"./fonts/FreeSans.ttf"
     #fontpath = r'c:\windows\fonts\tahoma.ttf'
     #fontpath = r'c:\windows\fonts\mriamc.ttf'
-    fontsize = 35
+    fontsize = 40
     build_cells(fontpath=fontpath,
                 fontsize=fontsize,
                 style=data['letters'],
