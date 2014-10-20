@@ -69,7 +69,6 @@ def clockfaceimg(style):
             fontsize = int(request.args.get('fontsize','30'))
         except ValueError:
             fontsize = 30
-        #img = clockface.drawclock(fontpath=r"./fonts/JosefinSans-Regular.ttf",
         img = clockface.drawclock(fontpath=findfontpath(style,fontname),
                                     fontsize=fontsize,
                                     fgcolor=fgcolor,
@@ -84,12 +83,34 @@ def clockfaceimg(style):
         abort(404)
 
 
-@app.route('/clock3jr/<style>/map')
+@app.route('/clock3jr/<style>/map/')
 def map(style):
     wtfpath = findwtf(style)
     if wtfpath is not None:
         data = Simulate.readwtf(wtfpath)
         return clockwords.data2json(data)
+    else:
+        abort(404)
+
+
+@app.route('/clock3jr/<style>/cells/')
+def cells(style):
+    wtfpath = findwtf(style)
+    if wtfpath is not None:
+        fontname = request.args.get('font')
+        try:
+            fontsize = int(request.args.get('fontsize','30'))
+        except ValueError:
+            fontsize = 30
+        data = Simulate.readwtf(wtfpath)
+        return render_template('cells.html',
+                               cells=clockface.build_cells(fontpath=findfontpath(style,fontname),
+                                                           fontsize=fontsize,
+                                                           style=data['letters'],
+                                                           case=lower),
+                               style=style,
+                               fontname=fontname,
+                               fontsize=fontsize)
     else:
         abort(404)
 

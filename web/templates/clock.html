@@ -43,8 +43,18 @@
                 }
             }
 
+        function updatecellcontents() {
+            $.ajax({
+                  url: "{{url_for('cells',style=style,font=fontname,fontsize=fontsize)|safe}}",
+                  context: document.body
+                    }).done(function(jqXHR,status) {
+                               $('.content').html(jqXHR) ;
+                    });
+            }
+
         $(window).load(function () {
             $(document).ready(function () {
+                updatecellcontents();
                 $.getJSON('map',function(data) {
                                     mapdata=data;;
                                     lightsentence(time5)
@@ -79,9 +89,6 @@
     <div class="jumbotron">
         <div class="container" style="text-align: center">
             <div class="content" >
-                {% for c in cells %}
-                <div id="{{c.id}}" title="{{c.title}}" class="lit" style="left: {{c.left}}px; top: {{c.top}}px; background-position: -{{c.left}}px -{{c.top}}px; height:{{c.height}}px; width:{{c.width}}px"></div>
-                {% endfor %}
             </div>
 
             <!-- Button trigger modal -->
