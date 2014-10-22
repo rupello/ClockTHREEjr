@@ -9,8 +9,6 @@
             position: relative;
             width:  910px;
             height: 910px;
-            {# note the use of the |safe filter to disable autoescaping within the script block #}
-            background: url('{{url_for('clockfaceimg',style=style,font=fontname,fontsize=fontsize)|safe}}') no-repeat 0 0;
             overflow: hidden;
             display: block;
             margin-left: auto;
@@ -20,8 +18,6 @@
         .lit
         {
             position: absolute;
-            {# note the use of the |safe filter to disable autoescaping within the script block #}
-            background-image: url("{{url_for('clockfaceimg',style=style,fg='#FFFBD9',font=fontname,fontsize=fontsize)|safe}}");
             background-repeat: no-repeat;
         }
     </style>
@@ -34,6 +30,49 @@
         var time5 = 0 ;
         var mapdata = null ;
 
+        function build_base_url(style,fontname,fontsize) {
+            new_path =  window.location.pathname.replace(/\/\w+\/$/,'/' + style +'/') + '?font=' + encodeURIComponent(fontname) + '&fontsize=' + fontsize;
+            return window.location.protocol + "//" + window.location.host +  new_path;
+        }
+
+        function build_cells_url(style,fontname,fontsize) {
+            new_url = build_base_url(style,fontname,fontsize);
+            return new_url.replace(/\?/,'cells/?');
+            }
+
+        function build_map_url(style,fontname,fontsize) {
+            new_url = build_base_url(style,fontname,fontsize);
+            return new_url.replace(/\?.*/,'map/')
+            }
+
+        function build_img_url(style,fontname,fontsize,lit) {
+            new_url = build_base_url(style,fontname,fontsize);
+            if(lit) {
+                return new_url.replace(/\?/,'clockface/?')+'&fg='+encodeURIComponent('#FFFBD9');
+                }
+            else {
+                return new_url.replace(/\?/,'clockface/?');
+                }
+            }
+
+        function updateclockstyles(style,fontname,fontsize) {
+            $('.content').css('background','url('+build_img_url(style,fontname,fontsize,false)+') no-repeat 0 0');
+            $('.lit').css('background-image','url('+build_img_url(style,fontname,fontsize,true)+')');
+        }
+
+        function updatecellcontents(style,fontname,fontsize) {
+                $.ajax({
+                          url: build_cells_url(style,fontname,fontsize),
+                          context: document.body
+                        }).done(function(jqXHR,status) {
+                                       $('.content').html(jqXHR) ;
+                                });
+                $.getJSON(build_map_url(style,fontname,fontsize),function(data) {
+                                                            mapdata=data;
+                                                            updateclockstyles(style,fontname,fontsize);
+                                                            lightsentence(time5)
+                                                        });
+            }
 
         function lightsentence(i) {
             $('.lit').hide();
@@ -43,42 +82,34 @@
                 }
             }
 
-        function updatecellcontents() {
-            $.ajax({
-                  url: "{{url_for('cells',style=style,font=fontname,fontsize=fontsize)|safe}}",
-                  context: document.body
-                    }).done(function(jqXHR,status) {
-                               $('.content').html(jqXHR) ;
-                    });
-            }
-
         $(window).load(function () {
             $(document).ready(function () {
-                updatecellcontents();
-                $.getJSON('map',function(data) {
-                                    mapdata=data;;
-                                    lightsentence(time5)
-                                });
 
-            // left and right arrow keys move time back/fwd
-            $(document).keydown(function(e){
-                if (e.keyCode == 37) {
-                    time5 = (time5+287) % 288
-                    lightsentence(time5);
-                    return false;
-                    }
-                if (e.keyCode == 39) {
-                    time5 = (time5+1) % 288
-                    lightsentence(time5);
-                    return false;
-                    }
-                });
+                var fontname = "{{fontname}}";
+                var fontsize = {{fontsize}};
+                var style = "{{style}}";
 
-                // advance time on mouse-click
-                $( ".content" ).click(function() {
-                    time5 = (time5+1) % 288
-                    lightsentence(time5);
-}               );
+                updatecellcontents(style,fontname,fontsize);
+
+                // left and right arrow keys move time back/fwd
+                $(document).keydown(function(e){
+                    if (e.keyCode == 37) {
+                        time5 = (time5+287) % 288
+                        lightsentence(time5);
+                        return false;
+                        }
+                    if (e.keyCode == 39) {
+                        time5 = (time5+1) % 288
+                        lightsentence(time5);
+                        return false;
+                        }
+                    });
+
+                    // advance time on mouse-click
+                    $( ".content" ).click(function() {
+                                            time5 = (time5+1) % 288
+                                            lightsentence(time5);
+                                          });
             });
         });//]]>  
     </script>

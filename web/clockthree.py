@@ -58,7 +58,7 @@ def index():
     return flask.redirect("/clock3jr/styles/", code=302)
 
 
-@app.route('/clock3jr/<style>/clockface')
+@app.route('/clock3jr/<style>/clockface/')
 def clockfaceimg(style):
     wtfpath = findwtf(style)
     if wtfpath is not None:
