@@ -112,17 +112,8 @@
                                           });
 
                     // change the font
-                    $( "#fontlarge" ).click(function() {
-                        updatecellcontents(style,fontname,40);
-                    });
-                    $( "#fontreg" ).click(function() {
-                        updatecellcontents(style,fontname,30);
-                    });
-                    $( "#fontsmall" ).click(function() {
-                        updatecellcontents(style,fontname,25);
-                    });
-                    $( "#fonttiny" ).click(function() {
-                        updatecellcontents(style,fontname,20);
+                    $( "[fontsize]" ).click(function() {
+                        updatecellcontents(style,fontname,$(this).attr("fontsize"));
                     });
 
             });
@@ -156,10 +147,10 @@
                 <div class="modal-body">
 
                     <div class="btn-toolbar" role="toolbar">
-                      <button id="fontlarge" type="button" class="btn btn-default btn-lg"> <span class="glyphicon glyphicon-font"></span> Large</button>
-                      <button id="fontreg" type="button" class="btn btn-default">        <span class="glyphicon glyphicon-font"></span> Regular</button>
-                      <button id="fontsmall" type="button" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-font"></span> Small</button>
-                      <button id="fonttiny" type="button" class="btn btn-default btn-xs"> <span class="glyphicon glyphicon-font"></span> Tiny</button>
+                      <button id="fontlarge" type="button" fontsize="45" class="btn btn-default btn-lg"> <span class="glyphicon glyphicon-font"></span> Large</button>
+                      <button id="fontreg" type="button" fontsize="35" class="btn btn-default">        <span class="glyphicon glyphicon-font"></span> Regular</button>
+                      <button id="fontsmall" type="button" fontsize="25" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-font"></span> Small</button>
+                      <button id="fonttiny" type="button" fontsize="15" class="btn btn-default btn-xs"> <span class="glyphicon glyphicon-font"></span> Tiny</button>
                     </div>
 
 
