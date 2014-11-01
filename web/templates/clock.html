@@ -1,31 +1,31 @@
 ﻿{% extends "bootstrap/base.html" %}
 
 {% block styles %}
-    {{ super() }}
+{{ super() }}
 
-    <style type='text/css'>
-        .content
-        {
-            position: relative;
-            width:  910px;
-            height: 910px;
-            overflow: hidden;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+<style type='text/css'>
+    .content
+    {
+    position: relative;
+    width: 910px;
+    height: 910px;
+    overflow: hidden;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    }
 
-        .lit
-        {
-            position: absolute;
-            background-repeat: no-repeat;
-        }
-    </style>
+    .lit
+    {
+    position: absolute;
+    background-repeat: no-repeat;
+    }
+</style>
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }}
-    <script type='text/javascript'>//<![CDATA[
+{{ super() }}
+<script type='text/javascript'>//<![CDATA[
         // Global variables
         var time5 = 0 ;
         var mapdata = null ;
@@ -118,44 +118,91 @@
 
             });
         });//]]>  
-    </script>
+
+</script>
 
 {% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
-        <div class="container" style="text-align: center">
-            <div class="content" >
-            </div>
-
-            <!-- Button trigger modal -->
-            <button class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal" style="margin-top: 10px">
-                Customize this clock
-            </button>
+<div class="jumbotron">
+    <div class="container" style="text-align: center">
+        <div class="content">
         </div>
+
+        <!-- Button trigger modal -->
+        <button class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal" style="margin-top: 10px">
+            Customize this clock
+        </button>
     </div>
+</div>
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Customize Settings</h4>
-                </div>
-                <div class="modal-body">
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Customize Settings</h4>
+            </div>
+            <div class="modal-body">
 
-                    <div class="btn-toolbar" role="toolbar">
-                      <button id="fontlarge" type="button" fontsize="45" class="btn btn-default btn-lg"> <span class="glyphicon glyphicon-font"></span> Large</button>
-                      <button id="fontreg" type="button" fontsize="35" class="btn btn-default">        <span class="glyphicon glyphicon-font"></span> Regular</button>
-                      <button id="fontsmall" type="button" fontsize="25" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-font"></span> Small</button>
-                      <button id="fonttiny" type="button" fontsize="15" class="btn btn-default btn-xs"> <span class="glyphicon glyphicon-font"></span> Tiny</button>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="btn-group">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                Choose Clock Style
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separate link</a></li>
+                            </ul>
+                        </div>
                     </div>
-
-
-                    ...
                 </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="btn-group">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                Choose Font Style
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separate link</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="btn-toolbar" role="toolbar">
+                            <button id="fontlarge" type="button" fontsize="45" class="btn btn-default btn-lg"><span
+                                    class="glyphicon glyphicon-font"></span> Large
+                            </button>
+                            <button id="fontreg" type="button" fontsize="35" class="btn btn-default"><span
+                                    class="glyphicon glyphicon-font"></span> Regular
+                            </button>
+                            <button id="fontsmall" type="button" fontsize="25" class="btn btn-default btn-sm"><span
+                                    class="glyphicon glyphicon-font"></span> Small
+                            </button>
+                            <button id="fonttiny" type="button" fontsize="15" class="btn btn-default btn-xs"><span
+                                    class="glyphicon glyphicon-font"></span> Tiny
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
@@ -163,6 +210,7 @@
             </div>
         </div>
     </div>
+</div>
 
 {% endblock %}
 

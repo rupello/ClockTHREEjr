@@ -142,6 +142,16 @@ def styles():
     return render_template('styles.html',styles=['foo','bar'],wtfs=wtfs)
 
 
+@app.route('/clock3jr/stylesandfonts/')
+def stylesandfonts():
+    fontsbystyle = {}
+    wtfs = current_app.config['wtfs']
+    for name,data in wtfs.items():
+        fontsbystyle[name]=[font_name_from_path(fp) for fp in wtfs[name]['fonts']]
+
+    return flask.jsonify(fontsbystyle)
+
+
 #!flask/bin/python
 if __name__ == '__main__':
     app.run(debug = True)
