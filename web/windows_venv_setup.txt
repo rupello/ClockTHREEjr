@@ -1,0 +1,13 @@
+create & activate venv...
+    virtualenv venvs\clock3\
+    venvs\clock3\Scripts\activate
+install vc compiler & latest setup tools...
+    http://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi
+    file:///C:/Users/Rupert/temp/ez_setup.py
+download & install...
+    http://iweb.dl.sourceforge.net/project/numpy/NumPy/1.9.1/numpy-1.9.1.zip
+    http://hivelocity.dl.sourceforge.net/project/fonttools/2.3/fonttools-2.3.tar.gz
+    https://pypi.python.org/packages/source/T/TTFQuery/TTFQuery-1.0.5.tar.gz
+pip install --use-wheel Pillow
+pip install flask
+pip install flask_bootstrap
